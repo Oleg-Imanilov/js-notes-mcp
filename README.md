@@ -249,6 +249,7 @@ MIT
 ``` 
 
 ![alt text](assets/image.png)
+
 **notes_storage.json**
 ```json
 {
@@ -260,6 +261,7 @@ MIT
 }
 ```
 ![alt text](assets/image2.png)
+
 **notes_storage.json**
 ```json
 {
