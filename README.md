@@ -232,7 +232,7 @@ MIT
 4. **Tool Call Validation**: Some MCP SDK versions may have validation issues - check the test files for workarounds
 
 
-Example of usage in cursor:
+# Example of usage in cursor:
 
 **mcp.json**
 ```json
