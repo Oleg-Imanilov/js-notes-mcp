@@ -241,7 +241,7 @@ MIT
     "notes_mcp": {
       "command": "node",
       "args": [
-      "c:/github/ai-and-more/notes-mcp/index-stdio.js"
+        "c:/github/js-notes-mcp/index-stdio.js"
       ]
     }
   }
