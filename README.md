@@ -25,7 +25,7 @@ This project implements an MCP server for managing notes with persistent storage
 1. Clone the repository:
 ```bash
 git clone <repository-url>
-cd notes-mcp
+cd js-notes-mcp
 ```
 
 2. Install dependencies:
