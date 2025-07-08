@@ -19,6 +19,9 @@ This project implements an MCP server for managing notes with persistent storage
 - ✅ **Timestamp tracking** - creation and modification dates
 - ✅ **Error handling** with detailed error messages
 - ✅ **CORS support** for web clients
+- ✅ **Smart prompts** - Pre-built templates for common note-taking scenarios
+- ✅ **Resources support** - Access notes data through MCP resources
+- ✅ **Enhanced capabilities** - Full MCP protocol compliance with latest SDK
 
 ## Installation
 
@@ -114,6 +117,61 @@ The MCP server provides the following tools:
 - **Parameters**: None
 - **Returns**: Current notes folder path
 
+## Available Resources
+
+The MCP server provides access to notes data through resources, which allow clients to access data in a structured way:
+
+### 1. `notes://all`
+- **Description**: Collection of all stored notes with full content and metadata
+- **MIME Type**: `application/json`
+- **Returns**: Complete notes data including content, creation, and modification timestamps
+
+### 2. `notes://list`
+- **Description**: List of all note names and metadata (without content)
+- **MIME Type**: `application/json`
+- **Returns**: Array of note objects with name, creation date, and modification date
+
+Resources can be accessed by MCP clients that support the resources capability and provide a convenient way to bulk access notes data without making multiple tool calls.
+
+## Available Prompts
+
+The MCP server provides intelligent prompt templates to help with common note-taking scenarios:
+
+### 1. `analyze_notes`
+- **Description**: Analyze all notes to identify patterns, themes, or insights
+- **Parameters**: 
+  - `focus_area` (string, optional): Specific area to focus analysis on (e.g., 'trends', 'themes', 'summary')
+- **Returns**: Comprehensive analysis prompt with all note content
+
+### 2. `create_meeting_notes`
+- **Description**: Template for creating structured meeting notes
+- **Parameters**:
+  - `meeting_type` (string, required): Type of meeting (e.g., 'standup', 'planning', 'review')
+  - `attendees` (string, optional): List of meeting attendees
+  - `agenda_items` (string, optional): Main agenda items to cover
+- **Returns**: Structured meeting notes template
+
+### 3. `summarize_note`
+- **Description**: Create a summary of a specific note or group of notes
+- **Parameters**:
+  - `note_name` (string, optional): Name of the note to summarize (leave empty to summarize all notes)
+  - `summary_length` (string, optional): Desired length of summary ('short', 'medium', 'long')
+- **Returns**: Summarization prompt with note content
+
+### 4. `daily_reflection`
+- **Description**: Template for daily reflection notes
+- **Parameters**:
+  - `date` (string, optional): Date for the reflection (defaults to today)
+- **Returns**: Daily reflection template with guided questions
+
+### 5. `project_planning`
+- **Description**: Template for project planning and task breakdown
+- **Parameters**:
+  - `project_name` (string, required): Name of the project
+  - `deadline` (string, optional): Project deadline
+  - `team_size` (string, optional): Number of team members
+- **Returns**: Comprehensive project planning template
+
 ## Data Storage
 
 Notes are stored in JSON format in the `data/notes_storage.json` file by default. Each note includes:
@@ -150,7 +208,9 @@ notes-mcp/
 └── tests/                  # Test files
     ├── test-http.js        # HTTP transport tests
     ├── test-stdio.js       # STDIO transport tests
-    └── test-all-mcp-tools.js # Comprehensive MCP tools tests
+    ├── test-all-mcp-tools.js # Comprehensive MCP tools tests
+    ├── test-prompts.js     # Prompts functionality tests
+    └── test-resources.js   # Resources functionality tests
 ```
 
 ## HTTP API Endpoints
@@ -185,6 +245,17 @@ node tests/test-stdio.js
 
 # Test all MCP tools functionality
 node tests/test-all-mcp-tools.js
+
+# Test prompts functionality
+node tests/test-prompts.js
+
+# Test resources functionality
+node tests/test-resources.js
+
+# Or use npm scripts
+npm run test:tools
+npm run test:prompts
+npm run test:resources
 ```
 
 **Note**: Make sure to start the HTTP server (`npm run start:http`) before running HTTP transport tests.
@@ -204,6 +275,18 @@ You can change the notes storage location at runtime using the `set_notes_folder
 - Automatically load existing notes from that location
 - Create the directory if it doesn't exist
 
+### MCP Capabilities
+
+The server implements the following MCP capabilities:
+
+- **Tools**: Full CRUD operations for note management
+- **Resources**: Bulk access to notes data with subscription support
+- **Prompts**: Intelligent templates for common note-taking scenarios
+- **Logging**: Debug information and error tracking
+- **Completions**: Argument completion for tools and prompts
+
+The server is built with the latest MCP SDK patterns and provides comprehensive protocol compliance.
+
 ## Dependencies
 
 - `@modelcontextprotocol/sdk`: MCP SDK for server and client functionality
@@ -221,6 +304,9 @@ MIT
 - Session management prevents memory leaks in HTTP mode
 - Storage operations are synchronous for simplicity and data consistency
 - All timestamps are stored in ISO format for cross-platform compatibility
+- **Resources provide efficient bulk access** to notes data for MCP clients
+- **Prompts offer intelligent templates** that can be used by AI assistants to help with note-taking
+- **Full MCP protocol compliance** with enhanced capabilities and latest SDK patterns
 
 ## Troubleshooting
 
@@ -230,6 +316,8 @@ MIT
 2. **Port Conflicts**: Change the PORT environment variable if 3000 is in use
 3. **Session Issues**: Check that the `mcp-session-id` header is properly set for HTTP requests
 4. **Tool Call Validation**: Some MCP SDK versions may have validation issues - check the test files for workarounds
+5. **Resource Access**: If resources are not working, ensure your MCP client supports the resources capability
+6. **Prompt Execution**: Some clients may have different prompt handling - test with the included prompt tests
 
 
 # Example of usage in cursor:

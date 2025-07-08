@@ -7,7 +7,9 @@
   "scripts": {
     "start": "node index-stdio.js",
     "start:http": "node index-http.js",
-    "test:tools": "node tests/test-all-mcp-tools.js"
+    "test:tools": "node tests/test-all-mcp-tools.js",
+    "test:prompts": "node tests/test-prompts.js",
+    "test:resources": "node tests/test-resources.js"
   },
   "keywords": [
     "mcp",
