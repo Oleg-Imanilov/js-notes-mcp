@@ -559,6 +559,19 @@ class NotesMcpServer {
             }
           },
           {
+            name: "rename_note",
+            description: "Rename an existing note without changing its content",
+            inputSchema: {
+              type: "object",
+              properties: {
+                oldName: { type: "string", minLength: 1 },
+                newName: { type: "string", minLength: 1 }
+              },
+              required: ["oldName", "newName"],
+              additionalProperties: false
+            }
+          },
+          {
             name: "set_notes_folder",
             description: "Set the folder where notes will be stored and loaded from",
             inputSchema: {
@@ -602,6 +615,9 @@ class NotesMcpServer {
         
         case "delete_note":
           return this.notesService.deleteNoteHandler(args);
+        
+        case "rename_note":
+          return this.notesService.renameNoteHandler(args);
         
         case "set_notes_folder":
           return this.notesService.setNotesFolderHandler(args);

@@ -184,6 +184,39 @@ class NoteStorage {
             ...this.notes[name]
         };
     }
+
+    /**
+     * Rename a note without changing its content.
+     * @param {string} oldName - Current note name
+     * @param {string} newName - New note name
+     * @returns {Object} Renamed note data
+     */
+    renameNote(oldName, newName) {
+        if (!this.notes[oldName]) {
+            throw new Error(`Note '${oldName}' not found`);
+        }
+
+        if (this.notes[newName]) {
+            throw new Error(`Note '${newName}' already exists`);
+        }
+
+        const currentTime = new Date().toISOString();
+        const noteData = { ...this.notes[oldName] };
+        noteData.modified_at = currentTime;
+
+        // Add the note with the new name
+        this.notes[newName] = noteData;
+        
+        // Remove the old note
+        delete this.notes[oldName];
+        
+        this.saveNotes();
+
+        return {
+            name: newName,
+            ...noteData
+        };
+    }
 }
 
 export default NoteStorage;

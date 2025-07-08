@@ -13,6 +13,7 @@ class NotesService {
     this.createNoteHandler = this.createNoteHandler.bind(this);
     this.updateNoteHandler = this.updateNoteHandler.bind(this);
     this.deleteNoteHandler = this.deleteNoteHandler.bind(this);
+    this.renameNoteHandler = this.renameNoteHandler.bind(this);
     this.setNotesFolderHandler = this.setNotesFolderHandler.bind(this);
     this.getNotesFolderHandler = this.getNotesFolderHandler.bind(this);
   }
@@ -100,6 +101,22 @@ class NotesService {
         content: [{ 
           type: "text", 
           text: `Note '${name}' deleted successfully.\n${JSON.stringify(deletedNote, null, 2)}`
+        }]
+      };
+    } catch (error) {
+      return {
+        content: [{ type: "text", text: `Error: ${error.message}` }]
+      };
+    }
+  }
+
+  renameNoteHandler({ oldName, newName }) {
+    try {
+      const renamedNote = this.noteStorage.renameNote(oldName, newName);
+      return {
+        content: [{ 
+          type: "text", 
+          text: `Note '${oldName}' renamed to '${newName}' successfully.\n${JSON.stringify(renamedNote, null, 2)}`
         }]
       };
     } catch (error) {

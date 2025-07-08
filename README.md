@@ -1,17 +1,23 @@
 # MCP Notes Server
 
-A Model Context Protocol (MCP) server that provides note management functionality with both STDIO and HTTP transport support.
+A Model Context Protocol (MCP) server that provides note management functionality with both S### 7. `set_notes_folder`
+- **Description**: Set the folder where notes will be stored and loaded from
+- **Parameters**:
+  - `folderPath` (string, required): Path to the folder where notes should be stored
+- **Returns**: Success message with notes count
+
+### 8. `get_notes_folder`d HTTP transport support.
 
 ## Overview
 
-This project implements an MCP server for managing notes with persistent storage. It supports creating, reading, updating, and deleting notes, as well as configuring custom storage locations. The server can run in two modes:
+This project implements an MCP server for managing notes with persistent storage. It supports creating, reading, updating, deleting, and renaming notes, as well as configuring custom storage locations. The server can run in two modes:
 
 - **STDIO mode**: For direct integration with MCP clients
 - **HTTP mode**: For web-based access and testing via REST API
 
 ## Features
 
-- ✅ **Full CRUD operations** for notes (Create, Read, Update, Delete)
+- ✅ **Full CRUD operations** for notes (Create, Read, Update, Delete, Rename)
 - ✅ **Persistent storage** with JSON file backend
 - ✅ **Configurable storage location** - set custom folders for notes
 - ✅ **Dual transport support** - STDIO and HTTP
@@ -106,13 +112,20 @@ The MCP server provides the following tools:
   - `name` (string, required): Name of the note to delete
 - **Returns**: Deleted note object
 
-### 6. `set_notes_folder`
+### 6. `rename_note`
+- **Description**: Rename an existing note without changing its content
+- **Parameters**:
+  - `oldName` (string, required): Current name of the note to rename
+  - `newName` (string, required): New name for the note
+- **Returns**: Renamed note object with updated modification timestamp
+
+### 7. `set_notes_folder`
 - **Description**: Set the folder where notes will be stored and loaded from
 - **Parameters**:
   - `folderPath` (string, required): Path to the folder where notes should be stored
 - **Returns**: Success message with notes count
 
-### 7. `get_notes_folder`
+### 8. `get_notes_folder`
 - **Description**: Get the current folder path where notes are being stored
 - **Parameters**: None
 - **Returns**: Current notes folder path
@@ -279,7 +292,7 @@ You can change the notes storage location at runtime using the `set_notes_folder
 
 The server implements the following MCP capabilities:
 
-- **Tools**: Full CRUD operations for note management
+- **Tools**: Full CRUD operations for note management (Create, Read, Update, Delete, Rename)
 - **Resources**: Bulk access to notes data with subscription support
 - **Prompts**: Intelligent templates for common note-taking scenarios
 - **Logging**: Debug information and error tracking
